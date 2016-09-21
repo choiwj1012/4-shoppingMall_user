@@ -257,13 +257,13 @@ public class OrderDao {
 				}
 				
 				Order orderList = new Order();
-				orderList.setProductName(rs1.getString(2));
-				orderList.setProductNumber(rs1.getInt(3));
-				orderList.setOrderNumber(rs1.getInt(4)); 
-				orderList.setProductPrice(rs1.getInt(5));
-				orderList.setOrderCount(rs1.getInt(6));
-				orderList.setOrderDate(rs1.getDate(7));
-				orderList.setUserNumber(rs1.getInt(8));
+				orderList.setOrderNumber(rs1.getInt(2));
+				orderList.setOrderCount(rs1.getInt(3));
+				orderList.setOrderDate(rs1.getDate(4)); 
+				orderList.setUserNumber(rs1.getInt(5));
+				orderList.setProductName(rs1.getString(6));
+				orderList.setProductNumber(rs1.getInt(7));
+				orderList.setProductPrice(rs1.getInt(8));
 
 				sql = "select sum(ct.orderCount * pr.productPrice) from Cartlist ct, productlist pr where ct.productNumber = pr.ProductNumber and userNumber = ?";
 				pstmt2 = MainController.getDbController().getConnection().prepareStatement(sql);
