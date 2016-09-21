@@ -74,6 +74,16 @@ create table paymentlist(
   paymentDate Date default sysdate
 );
 
+--카드리스트 뷰
+create view cartlist_view
+as
+select cr.isPayment, cr.orderNumber, cr.orderCount,
+cr.orderDate, cr.userNumber, pr.productName, pr.productNumber, pr.productPrice
+from CARTLIST cr, productList pr
+where cr.productnumber = pr.productnumber;
+
+
+select * from cartlist_view;
 select * from productlist;
 select * from userlist;
 select * from adminlist;

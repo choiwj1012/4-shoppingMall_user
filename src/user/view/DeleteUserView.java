@@ -1,5 +1,6 @@
 package user.view;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DeleteUserView {
@@ -19,16 +20,22 @@ public class DeleteUserView {
 		
 		boolean isAgree = false; 
 		
-		System.out.println("정말 회원 탈퇴를 하시겠습니까? y or n");
-		char yesOrNo = keyboard.next().charAt(0);
-		
-		if(yesOrNo == 'y'){
-			isAgree = true;
+		try{
+			
+			System.out.println("정말 회원 탈퇴를 하시겠습니까? y or n");
+			char yesOrNo = keyboard.next().charAt(0);
+			
+			if(yesOrNo == 'y'){
+				isAgree = true;
+			}
+					
+		}catch(InputMismatchException e){
+			
+			System.err.println("잘못입력하셨습니다");
 		}
 		
 		return isAgree;
 		
 	}
-
 	
 }

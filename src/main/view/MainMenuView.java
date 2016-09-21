@@ -1,5 +1,6 @@
 package main.view;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import main.controller.MainController;
@@ -19,38 +20,44 @@ public class MainMenuView {
 	// method
 	public void mainMenuView(){
 
-		while(true){
+		try{
 
-			System.out.println("원하시는 메뉴를 선택하여 주십시오");
-			System.out.println("1. 상품보기 || 2. 회원가입 || 3. 로그인 || 4. 쇼핑몰 나가기");
+			while(true){
 
-			int selectedMenu = keyboard.nextInt();
+				System.out.println("원하시는 메뉴를 선택하여 주십시오");
+				System.out.println("1. 상품보기 || 2. 회원가입 || 3. 로그인 || 4. 쇼핑몰 나가기");
 
-			if(selectedMenu == 1){
+				int selectedMenu = keyboard.nextInt();
 
-				MainController.getProductController().requestProductlist(); // 상품보기
+				if(selectedMenu == 1){
 
-			} else if(selectedMenu == 2){
+					MainController.getProductController().requestProductlist(); // 상품보기
 
-				MainController.getUserController().requestNewUserInfo(); // 회원가입
+				} else if(selectedMenu == 2){
 
-			} else if(selectedMenu == 3){
+					MainController.getUserController().requestNewUserInfo(); // 회원가입
 
-				MainController.getLoginController().requestLoginUserInfoView(); // 로그인
+				} else if(selectedMenu == 3){
 
-			} else if(selectedMenu == 4){
+					MainController.getLoginController().requestLoginUserInfoView(); // 로그인
 
-				System.out.println("이용해 주셔서 감사합니다");
-				MainController.getDbController().requestExitProgram();
+				} else if(selectedMenu == 4){
 
-			} else {
+					System.out.println("이용해 주셔서 감사합니다");
+					MainController.getDbController().requestExitProgram();
 
-				System.out.println("메뉴를 잘못 선택하셨습니다");
+				} else {
 
+					System.out.println("메뉴를 잘못 선택하셨습니다");
+
+				}
 			}
+			
+		} catch(InputMismatchException e) {
+
+			System.out.println("잘못입력하셨습니다.");
+			MainController.mainMenuView();
 		}
-
-	} 
-
+	}
 }
 

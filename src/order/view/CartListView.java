@@ -1,5 +1,6 @@
 package order.view;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import main.controller.MainController;
@@ -38,20 +39,26 @@ public class CartListView {
 			return;
 		}
 		
-		System.out.println("주문하시겠습니끼?");
-		System.out.println("주문하시려면 1번을 돌아가시려면 2번을 눌러주세요");
-		
-		int selectedMenu = keyboard.nextInt();
-		
-		if(selectedMenu == 1){
-			MainController.getOrderController().requestOrderProduct();
-		} else if(selectedMenu == 2) {
-			return;
-		} else {
-			System.out.println("잘못 입력하셨습니다.");
+		try{
+			
+			System.out.println("주문하시겠습니끼?");
+			System.out.println("주문하시려면 1번을 돌아가시려면 2번을 눌러주세요");
+			
+			int selectedMenu = keyboard.nextInt();
+			
+			if(selectedMenu == 1){
+				MainController.getOrderController().requestOrderProduct();
+			} else if(selectedMenu == 2) {
+				return;
+			} else {
+				System.out.println("잘못 입력하셨습니다.");
+			}
+			
+		}catch(InputMismatchException e){
+			
+			System.err.println("잘못입력하셨습니다");
 		}
-		
-		
+
 	}
 
 }

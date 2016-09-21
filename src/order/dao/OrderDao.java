@@ -243,7 +243,8 @@ public class OrderDao {
 
 		try {
 
-			String sql = "select distinct cr.isPayment, pr.productName, pr.productNumber, cr.orderNumber, pr.productPrice, cr.orderCount, cr.orderDate, cr.userNumber from CARTLIST cr, productList pr where cr.userNumber = ? and cr.PRODUCTNUMBER = pr.PRODUCTNUMBER";  
+			String sql = "select * from cartlist_view where userNumber = ? ";
+					//"select distinct cr.isPayment, pr.productName, pr.productNumber, cr.orderNumber, pr.productPrice, cr.orderCount, cr.orderDate, cr.userNumber from CARTLIST cr, productList pr where cr.userNumber = ? and cr.PRODUCTNUMBER = pr.PRODUCTNUMBER";  
 			pstmt1 = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt1.setInt(1, LoginRepository.getLogin().getUserNumber());
 			rs1 = pstmt1.executeQuery();

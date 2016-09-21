@@ -54,7 +54,7 @@ public class UpdateCartList {
 			
 		} catch(InputMismatchException e) {
 			
-			System.out.println("잘못된 입력입니다");
+			System.err.println("잘못입력하셨습니다");
 			
 		}
 					
