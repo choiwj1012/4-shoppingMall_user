@@ -1,6 +1,5 @@
 package main.controller;
 
-import admin.controller.AdminController;
 import login.controller.LoginController;
 import main.view.AlertView;
 import main.view.MainMenuView;
@@ -14,7 +13,6 @@ public class MainController {
 	
 	// Connect Controllers
 	private static DB_Controller dbController;
-	private static AdminController adminController;
 	private static UserController userController;
 	private static LoginController loginController;
 	private static ProductController productController;
@@ -26,7 +24,6 @@ public class MainController {
 	public MainController() {
 	
 		dbController = new DB_Controller();
-		adminController = new AdminController();
 		userController = new UserController();
 		loginController = new LoginController();
 		productController = new ProductController();
@@ -42,11 +39,6 @@ public class MainController {
 	}
 	
 	
-	public static AdminController getAdminController() {
-		return adminController;
-	}
-
-
 	public static UserController getUserController() {
 		return userController;
 	}

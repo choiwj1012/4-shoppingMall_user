@@ -110,23 +110,6 @@ public class UserController {
 	}
 
 	
-	// 관리자가 강제로 회원 삭제
-	public void requestForceDeleteUser() {
-
-		DeleteUserView deleteUserView = new DeleteUserView();
-		int selectedUserNumber = deleteUserView.forceDeleteUserView();
-		
-		boolean success = userDao.userDelete(selectedUserNumber);
-		
-		if(success){
-			MainController.AlertView("회원이 삭제되었습니다");
-		} else {
-			MainController.AlertView("회원이 삭제되지 않았습니다");
-		}
-		
-	}
-
-	
 	// 회원 리스트 출력
 	public void requestUserList() {
 		

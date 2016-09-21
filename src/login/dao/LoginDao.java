@@ -43,22 +43,22 @@ public class LoginDao {
 			
 			rs.close();
 			pstmt.close();
-			
-			// 관리자인지 확인
-			sql = "select * from ADMINLIST where adminId = ? and adminPassword = ?";
-			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
-			pstmt.setString(1, loginUser.getLoginUserId());
-			pstmt.setString(2, loginUser.getLoginUserPassword());
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()){
-				// 1이면 관리자
-				userOrAdmin = 1;
-			}
-			
-			rs.close();
-			pstmt.close();
-					
+//			
+//			// 관리자인지 확인
+//			sql = "select * from ADMINLIST where adminId = ? and adminPassword = ?";
+//			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
+//			pstmt.setString(1, loginUser.getLoginUserId());
+//			pstmt.setString(2, loginUser.getLoginUserPassword());
+//			rs = pstmt.executeQuery();
+//			
+//			if(rs.next()){
+//				// 1이면 관리자
+//				userOrAdmin = 1;
+//			}
+//			
+//			rs.close();
+//			pstmt.close();
+//					
 		} catch (SQLException e) {
 			
 			e.printStackTrace();

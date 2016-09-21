@@ -207,33 +207,6 @@ public class UserDao {
 
 	}
 	
-	public boolean userDelete(int selectedUserNumber){
-		
-		boolean success = false;
-		PreparedStatement pstmt = null;
-
-		try {
-
-			String sql = "delete USERLIST where userNumber = ?";	
-			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
-			pstmt.setInt(1, selectedUserNumber);
-			pstmt.executeUpdate();
-			success = true;
-
-		} catch (SQLException e) {
-
-			e.printStackTrace();
-
-		} finally {
-			
-			if(pstmt != null){try{pstmt.close();} catch (SQLException e){e.printStackTrace();}}
-	
-		}
-
-		return success;
-		
-	}
-
 
 	// 유저 리스트 리턴
 	public ArrayList<User> userList() {

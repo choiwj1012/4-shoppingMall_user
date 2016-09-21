@@ -5,7 +5,7 @@ drop table userlist;
 drop table productlist;
 
 
--- »óÇ° Å×ÀÌºí ÀÛ¼º
+-- ìƒí’ˆ í…Œì´ë¸” ì‘ì„±
 create table productlist(
   productNumber int primary key,
   productName varchar2(50) not null unique,
@@ -22,7 +22,7 @@ insert into productlist values(4,'iPad_Pro', 982000, 'tablePc', 'apple');
 insert into productlist values(5,'Gellexy_Note_7',1123000, 'smartPhone', 'Samsung');
 
 
--- È¸¿ø Å×ÀÌºí ÀÛ¼º
+-- íšŒì› í…Œì´ë¸” ì‘ì„±
 create table userlist(
   userNumber int primary key,
   userId varchar2(20) not null unique,
@@ -31,13 +31,13 @@ create table userlist(
 );
 
 
-insert into userlist values(1, 'user1', 'user1', 'À¯Àú1');
-insert into userlist values(2, 'user2', 'user2', 'À¯Àú2');
-insert into userlist values(3, 'user3', 'user3', 'À¯Àú3');
-insert into userlist values(4, 'choiwj1012', 'choiwj1012', 'ÃÖ¿øÀç');
+insert into userlist values(1, 'user1', 'user1', 'ìœ ì €1');
+insert into userlist values(2, 'user2', 'user2', 'ìœ ì €2');
+insert into userlist values(3, 'user3', 'user3', 'ìœ ì €3');
+insert into userlist values(4, 'choiwj1012', 'choiwj1012', 'ìµœì›ì¬');
 
 
--- °ü¸®ÀÚ Å×ÀÌºí ÀÛ¼º
+-- ê´€ë¦¬ì í…Œì´ë¸” ì‘ì„±
 create table adminlist(
   adminNumber int primary key,
   adminId varchar2(20) not null unique,
@@ -47,23 +47,24 @@ create table adminlist(
 );
 
 
--- ±ÇÇÑ¹øÈ£ 1Àº Á¡Àå, 2´Â ÀÏ¹İÁ÷¿ø
-insert into adminlist values(1, 'admin1', 'admin1', '°ü¸®ÀÚ1', 1);
-insert into adminlist values(2, 'admin2', 'admin2', '°ü¸®ÀÚ2', 2);
-insert into adminlist values(3, 'admin3', 'admin3', '°ü¸®ÀÚ3', 3);
+-- ê¶Œí•œë²ˆí˜¸ 1ì€ ì ì¥, 2ëŠ” ì¼ë°˜ì§ì›
+insert into adminlist values(1, 'admin1', 'admin1', 'ê´€ë¦¬ì1', 1);
+insert into adminlist values(2, 'admin2', 'admin2', 'ê´€ë¦¬ì2', 2);
+insert into adminlist values(3, 'admin3', 'admin3', 'ê´€ë¦¬ì3', 3);
 
 
--- Ä«Æ® Å×ÀÌºí ÀÛ¼º
+-- ì¹´íŠ¸ í…Œì´ë¸” ì‘ì„±
 create table cartlist(
   orderNumber int primary key,
   productNumber int references productlist(productNumber),
   userNumber int references userlist(userNumber),
   orderCount int not null,
-  orderDate Date default sysdate
+  orderDate Date default sysdate,
+  isPayment int not null
 );
 
 
--- °áÁ¦ Å×ÀÌºí ÀÛ¼º
+-- ê²°ì œ í…Œì´ë¸” ì‘ì„±
 create table paymentlist(
   paymentListNumber int primary key,
   userNumber int references userlist(userNumber),

@@ -30,12 +30,5 @@ public class DeleteUserView {
 		
 	}
 
-	public int forceDeleteUserView() {
-		
-		System.out.println("삭제를 원하시는 회원의 번호를 입력하십시오");
-		int selectedUserNumber = keyboard.nextInt();
-		return selectedUserNumber;
-		
-	}
 	
 }
