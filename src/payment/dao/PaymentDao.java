@@ -92,7 +92,8 @@ public class PaymentDao {
 			rs.close();
 			pstmt.close();
 			
-			sql = "select pm.paymentListNumber, pm.userNumber, pm.productNumber, pm.paymentCount, pm.paymentMethod, pm.paymentDate, pt.productName, pt.productPrice from paymentList pm, productList pt where pm.userNumber = ? and pm.productNumber = pt.productNumber";
+//			sql = "select pm.paymentListNumber, pm.userNumber, pm.productNumber, pm.paymentCount, pm.paymentMethod, pm.paymentDate, pt.productName, pt.productPrice from paymentList pm, productList pt where pm.userNumber = ? and pm.productNumber = pt.productNumber";
+			sql = "select * from paymentlist_view where usernumber = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setInt(1, userNumber);
 			rs = pstmt.executeQuery();
