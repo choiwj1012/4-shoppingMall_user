@@ -67,7 +67,7 @@ public class PaymentDao {
 
 		try {
 
-			sql = "select shop_master.userNumber from shop_master.userlist where userId = ?";
+			sql = "select userNumber from shop_master.userlist where userId = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setString(1, LoginRepository.getLogin().getLoginUserId());
 			rs = pstmt.executeQuery();

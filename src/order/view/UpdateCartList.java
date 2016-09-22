@@ -32,18 +32,18 @@ public class UpdateCartList {
 				int selectedProductNumber = keyboard.nextInt();
 				
 				System.out.println("수정할 수량을 입력해 주세요");	
-				int updateProductCount = keyboard.nextInt();
+				int updateOrderCount = keyboard.nextInt();
 				
-				order = new Order(selectedProductNumber, updateProductCount);
+				order = new Order(selectedProductNumber, updateOrderCount);
 				MainController.getOrderController().requestUpdateCartList(order);
 				
 			}else if(selectedMenu == 2){
 				
 				System.out.println("삭제할 상품번호를 입력해 주세요");
 				int selectedProductNumber = keyboard.nextInt();
-				int updateProductCount = 0;
+				int updateOrderCount = 0;
 				
-				order = new Order(selectedProductNumber, updateProductCount);
+				order = new Order(selectedProductNumber, updateOrderCount);
 				MainController.getOrderController().requestUpdateCartList(order);
 				
 			} else {
