@@ -127,7 +127,6 @@ public class OrderDao {
 		ResultSet rs1 = null;
 		ResultSet rs2 = null;
 		ResultSet rs3 = null;
-		int maxOrderNumber = 0;
 		int userNumber = 0;
 
 		try {
@@ -167,27 +166,15 @@ public class OrderDao {
 					return success;
 
 				}
-				
-				// 주문 리스트 추가시 주문 번호 증가
-				sql = "select max(orderNumber) + 1 as maxOrderNumber from CARTLIST";
-				stmt = MainController.getDbController().getConnection().createStatement();
-				rs3 = stmt.executeQuery(sql);
-
-				if(rs3.next()){
-					maxOrderNumber = rs3.getInt(1);
-					if(rs3.wasNull()){
-						maxOrderNumber = 1;
-					}
-				}
+			
 
 				// 주문리스트에 데이터 저장
-				sql = "insert into cartlist(orderNumber, productNumber, userNumber, orderCount, isPayment) values(?,?,?,?,?)";
+				sql = "insert into cartlist(orderNumber, productNumber, userNumber, orderCount, isPayment) values(orderlist_seq.nextval,?,?,?,?)";
 				pstmt4 = MainController.getDbController().getConnection().prepareStatement(sql);
-				pstmt4.setInt(1, maxOrderNumber);
-				pstmt4.setInt(2, OrderRepository.getOrders().get(i).getProductNumber());
-				pstmt4.setInt(3, userNumber);
-				pstmt4.setInt(4, OrderRepository.getOrders().get(i).getOrderCount());
-				pstmt4.setInt(5, OrderRepository.getOrders().get(i).getIsPayment());
+				pstmt4.setInt(1, OrderRepository.getOrders().get(i).getProductNumber());
+				pstmt4.setInt(2, userNumber);
+				pstmt4.setInt(3, OrderRepository.getOrders().get(i).getOrderCount());
+				pstmt4.setInt(4, OrderRepository.getOrders().get(i).getIsPayment());
 				pstmt4.executeUpdate();
 
 				success = true;
@@ -243,8 +230,7 @@ public class OrderDao {
 
 		try {
 
-			String sql = "select * from cartlist_view where userNumber = ? ";
-					//"select distinct cr.isPayment, pr.productName, pr.productNumber, cr.orderNumber, pr.productPrice, cr.orderCount, cr.orderDate, cr.userNumber from CARTLIST cr, productList pr where cr.userNumber = ? and cr.PRODUCTNUMBER = pr.PRODUCTNUMBER";  
+			String sql = "select * from cartlist_view where userNumber = ? ";  
 			pstmt1 = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt1.setInt(1, LoginRepository.getLogin().getUserNumber());
 			rs1 = pstmt1.executeQuery();
