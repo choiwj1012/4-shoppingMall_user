@@ -20,36 +20,23 @@ public class PaymentDao {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
-		int maxPaymentListNumber = 0;
 		String sql = null;
 
 		try {
 
 			for(int i=0; i<orders.size(); i++){
-
-				sql = "select max(paymentListNumber) + 1 as paymentListNumber from paymentList";
-				stmt = MainController.getDbController().getConnection().createStatement();
-				rs = stmt.executeQuery(sql);
-
-				if(rs.next()){
-					maxPaymentListNumber = rs.getInt(1);
-					if(rs.wasNull()){
-						maxPaymentListNumber = 1;
-					}		
-				}
 				
-				sql = "insert into paymentlist(paymentListNumber, userNumber, productNumber, paymentCount, paymentMethod) values(?, ?, ?, ?, ?)";	
+				sql = "insert into shop_master.paymentlist(paymentListNumber, userNumber, productNumber, paymentCount, paymentMethod) values(shop_master.paymentlist_seq.nextval, ?, ?, ?, ?)";	
 				pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
-				pstmt.setInt(1, maxPaymentListNumber);
-				pstmt.setInt(2, orders.get(i).getUserNumber());
-				pstmt.setInt(3, orders.get(i).getProductNumber());
-				pstmt.setInt(4, orders.get(i).getOrderCount());
-				pstmt.setInt(5, selectedMethodNumber);
+				pstmt.setInt(1, orders.get(i).getUserNumber());
+				pstmt.setInt(2, orders.get(i).getProductNumber());
+				pstmt.setInt(3, orders.get(i).getOrderCount());
+				pstmt.setInt(4, selectedMethodNumber);
 				pstmt.executeUpdate();
 
 			}
 
-			sql = "update cartlist set isPayment = ? where userNumber = ?";
+			sql = "update shop_master.cartlist set isPayment = ? where userNumber = ?";
 			pstmt2 = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt2.setInt(1, 1);
 			pstmt2.setInt(2, orders.get(0).getUserNumber());	
@@ -80,7 +67,7 @@ public class PaymentDao {
 
 		try {
 
-			sql = "select userNumber from userlist where userId = ?";
+			sql = "select shop_master.userNumber from shop_master.userlist where userId = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setString(1, LoginRepository.getLogin().getLoginUserId());
 			rs = pstmt.executeQuery();
@@ -92,8 +79,7 @@ public class PaymentDao {
 			rs.close();
 			pstmt.close();
 			
-//			sql = "select pm.paymentListNumber, pm.userNumber, pm.productNumber, pm.paymentCount, pm.paymentMethod, pm.paymentDate, pt.productName, pt.productPrice from paymentList pm, productList pt where pm.userNumber = ? and pm.productNumber = pt.productNumber";
-			sql = "select * from paymentlist_view where usernumber = ?";
+			sql = "select * from shop_master.paymentlist_view where usernumber = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setInt(1, userNumber);
 			rs = pstmt.executeQuery();

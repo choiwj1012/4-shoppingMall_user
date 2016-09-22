@@ -19,7 +19,7 @@ public class ProductDao {
 
 		try{
 			stmt = MainController.getDbController().getConnection().createStatement();
-			String sql = "select * from PRODUCTLIST";
+			String sql = "select * from shop_master.PRODUCTLIST";
 			rs = stmt.executeQuery(sql);
 
 			while(rs.next()){

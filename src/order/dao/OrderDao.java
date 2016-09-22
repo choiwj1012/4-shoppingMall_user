@@ -40,7 +40,7 @@ public class OrderDao {
 		// 상품정보 DB에서 불러오기	
 		try {
 			
-			String sql = "select productName, productPrice from productlist where productNumber = ?";
+			String sql = "select productName, productPrice from shop_master.productlist where productNumber = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setInt(1, newOrder.getProductNumber());
 			rs = pstmt.executeQuery();
@@ -127,7 +127,6 @@ public class OrderDao {
 		ResultSet rs1 = null;
 		ResultSet rs2 = null;
 		ResultSet rs3 = null;
-		int maxOrderNumber = 0;
 		int userNumber = 0;
 
 		try {
@@ -136,7 +135,7 @@ public class OrderDao {
 			MainController.getDbController().getConnection().setAutoCommit(false);
 
 			// 현재 접속한 아이디에 해당하는 userNumber를 찾음
-			String sql = "select userNumber from userlist where userId = ?";
+			String sql = "select userNumber from shop_master.userlist where userId = ?";
 			pstmt1 = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt1.setString(1, LoginRepository.getLogin().getLoginUserId());
 			rs1 = pstmt1.executeQuery();
@@ -148,7 +147,7 @@ public class OrderDao {
 			for(int i=0; i<OrderRepository.getOrders().size(); i++){
 				
 				// 선택한 제품번호와 유저번호에 해당하는 주문 리스트 내역 찾음
-				sql = "select * from CARTLIST where productNumber = ? and userNumber = ? and isPayment = 0";
+				sql = "select * from shop_master.CARTLIST where productNumber = ? and userNumber = ? and isPayment = 0";
 				pstmt2 = MainController.getDbController().getConnection().prepareStatement(sql);
 				pstmt2.setInt(1, OrderRepository.getOrders().get(i).getProductNumber());
 				pstmt2.setInt(2, userNumber);
@@ -157,7 +156,7 @@ public class OrderDao {
 				if(rs2.next()){	
 
 					// 동일 상품이 이미 장바구니에 있다면 수량만 조정
-					sql = "update CARTLIST set orderCount = ? where productNumber = ? and userNumber = ? and isPayment = 0";
+					sql = "update shop_master.CARTLIST set orderCount = ? where productNumber = ? and userNumber = ? and isPayment = 0";
 					pstmt3 = MainController.getDbController().getConnection().prepareStatement(sql);
 					pstmt3.setInt(1, OrderRepository.getOrders().get(i).getOrderCount());
 					pstmt3.setInt(2, OrderRepository.getOrders().get(i).getProductNumber());
@@ -167,27 +166,15 @@ public class OrderDao {
 					return success;
 
 				}
-				
-				// 주문 리스트 추가시 주문 번호 증가
-				sql = "select max(orderNumber) + 1 as maxOrderNumber from CARTLIST";
-				stmt = MainController.getDbController().getConnection().createStatement();
-				rs3 = stmt.executeQuery(sql);
-
-				if(rs3.next()){
-					maxOrderNumber = rs3.getInt(1);
-					if(rs3.wasNull()){
-						maxOrderNumber = 1;
-					}
-				}
+			
 
 				// 주문리스트에 데이터 저장
-				sql = "insert into cartlist(orderNumber, productNumber, userNumber, orderCount, isPayment) values(?,?,?,?,?)";
+				sql = "insert into shop_master.cartlist(orderNumber, productNumber, userNumber, orderCount, isPayment) values(shop_master.orderlist_seq.nextval,?,?,?,?)";
 				pstmt4 = MainController.getDbController().getConnection().prepareStatement(sql);
-				pstmt4.setInt(1, maxOrderNumber);
-				pstmt4.setInt(2, OrderRepository.getOrders().get(i).getProductNumber());
-				pstmt4.setInt(3, userNumber);
-				pstmt4.setInt(4, OrderRepository.getOrders().get(i).getOrderCount());
-				pstmt4.setInt(5, OrderRepository.getOrders().get(i).getIsPayment());
+				pstmt4.setInt(1, OrderRepository.getOrders().get(i).getProductNumber());
+				pstmt4.setInt(2, userNumber);
+				pstmt4.setInt(3, OrderRepository.getOrders().get(i).getOrderCount());
+				pstmt4.setInt(4, OrderRepository.getOrders().get(i).getIsPayment());
 				pstmt4.executeUpdate();
 
 				success = true;
@@ -243,8 +230,7 @@ public class OrderDao {
 
 		try {
 
-			String sql = "select * from cartlist_view where userNumber = ? ";
-					//"select distinct cr.isPayment, pr.productName, pr.productNumber, cr.orderNumber, pr.productPrice, cr.orderCount, cr.orderDate, cr.userNumber from CARTLIST cr, productList pr where cr.userNumber = ? and cr.PRODUCTNUMBER = pr.PRODUCTNUMBER";  
+			String sql = "select * from shop_master.cartlist_view where userNumber = ? ";  
 			pstmt1 = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt1.setInt(1, LoginRepository.getLogin().getUserNumber());
 			rs1 = pstmt1.executeQuery();
@@ -265,7 +251,7 @@ public class OrderDao {
 				orderList.setProductNumber(rs1.getInt(7));
 				orderList.setProductPrice(rs1.getInt(8));
 
-				sql = "select sum(ct.orderCount * pr.productPrice) from Cartlist ct, productlist pr where ct.productNumber = pr.ProductNumber and userNumber = ?";
+				sql = "select sum(ct.orderCount * pr.productPrice) from shop_master.Cartlist ct, shop_master.productlist pr where ct.productNumber = pr.ProductNumber and userNumber = ?";
 				pstmt2 = MainController.getDbController().getConnection().prepareStatement(sql);
 				pstmt2.setInt(1, LoginRepository.getLogin().getUserNumber());
 				rs2 = pstmt2.executeQuery();
@@ -303,7 +289,7 @@ public class OrderDao {
 
 		try {
 
-			String sql = "select userNumber from userlist where userId = ?";
+			String sql = "select userNumber from shop_master.userlist where userId = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setString(1, LoginRepository.getLogin().getLoginUserId());
 			rs = pstmt.executeQuery();
@@ -314,7 +300,7 @@ public class OrderDao {
 
 			pstmt.close();
 
-			sql = "update CARTLIST set orderCount = ? where productNumber = ? and userNumber = ?";
+			sql = "update shop_master.CARTLIST set orderCount = ? where productNumber = ? and userNumber = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setInt(1, updatedOrder.getOrderCount());
 			pstmt.setInt(2, updatedOrder.getProductNumber());
@@ -347,7 +333,7 @@ public class OrderDao {
 
 		try {
 
-			String sql = "delete CARTLIST where productNumber = ?";
+			String sql = "delete shop_master.CARTLIST where productNumber = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setInt(1, selectedProductNumber);
 			pstmt.executeUpdate();
