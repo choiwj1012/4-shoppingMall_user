@@ -26,7 +26,7 @@ public class PaymentDao {
 
 			for(int i=0; i<orders.size(); i++){
 				
-				sql = "insert into paymentlist(paymentListNumber, userNumber, productNumber, paymentCount, paymentMethod) values(paymentlist_seq.nextval, ?, ?, ?, ?)";	
+				sql = "insert into shop_master.paymentlist(paymentListNumber, userNumber, productNumber, paymentCount, paymentMethod) values(shop_master.paymentlist_seq.nextval, ?, ?, ?, ?)";	
 				pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 				pstmt.setInt(1, orders.get(i).getUserNumber());
 				pstmt.setInt(2, orders.get(i).getProductNumber());
@@ -36,7 +36,7 @@ public class PaymentDao {
 
 			}
 
-			sql = "update cartlist set isPayment = ? where userNumber = ?";
+			sql = "update shop_master.cartlist set isPayment = ? where userNumber = ?";
 			pstmt2 = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt2.setInt(1, 1);
 			pstmt2.setInt(2, orders.get(0).getUserNumber());	
@@ -67,7 +67,7 @@ public class PaymentDao {
 
 		try {
 
-			sql = "select userNumber from userlist where userId = ?";
+			sql = "select shop_master.userNumber from shop_master.userlist where userId = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setString(1, LoginRepository.getLogin().getLoginUserId());
 			rs = pstmt.executeQuery();
@@ -79,7 +79,7 @@ public class PaymentDao {
 			rs.close();
 			pstmt.close();
 			
-			sql = "select * from paymentlist_view where usernumber = ?";
+			sql = "select * from shop_master.paymentlist_view where usernumber = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setInt(1, userNumber);
 			rs = pstmt.executeQuery();

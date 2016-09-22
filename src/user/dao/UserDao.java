@@ -24,7 +24,7 @@ public class UserDao {
 
 		try {
 
-			String sql = "select * from USERLIST where userId = ?";
+			String sql = "select * from shop_master.USERLIST where userId = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setString(1, newUser.getUserId());
 			rs = pstmt.executeQuery();
@@ -35,7 +35,7 @@ public class UserDao {
 
 			} else {
 
-				sql = "insert into USERLIST values(userlist_seq.nextval,?,?,?)";
+				sql = "insert into shop_master.USERLIST values(shop_master.userlist_seq.nextval,?,?,?)";
 				pstmt2 = MainController.getDbController().getConnection().prepareStatement(sql);
 				pstmt2.setString(1, newUser.getUserId());
 				pstmt2.setString(2, newUser.getUserPassword());
@@ -73,7 +73,7 @@ public class UserDao {
 
 		try {
 
-			String sql = "select * from USERLIST where userId = ?";
+			String sql = "select * from shop_master.USERLIST where userId = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setString(1, loginUser.getLoginUserId());
 			rs = pstmt.executeQuery();
@@ -111,7 +111,7 @@ public class UserDao {
 
 		try {
 
-			String sql = "select * from USERLIST where userId = ?";
+			String sql = "select * from shop_master.USERLIST where userId = ?";
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setString(1, updatedUser.getUserId());
 			rs = pstmt.executeQuery();
@@ -134,7 +134,7 @@ public class UserDao {
 
 		try {
 
-			String sql = "update USERLIST set userPassword = ?, userName = ? where userId = ?";	
+			String sql = "update shop_master.USERLIST set userPassword = ?, userName = ? where userId = ?";	
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 
 			if(updatedUser.getUserPassword() != null){
@@ -172,7 +172,7 @@ public class UserDao {
 
 		try {
 
-			String sql = "delete USERLIST where userId = ?";	
+			String sql = "delete shop_master.USERLIST where userId = ?";	
 			pstmt = MainController.getDbController().getConnection().prepareStatement(sql);
 			pstmt.setString(1, loginUser.getLoginUserId());
 			pstmt.executeUpdate();
@@ -202,7 +202,7 @@ public class UserDao {
 		
 		try {
 			
-			String sql = "select * from USERLIST";
+			String sql = "select * from shop_master.USERLIST";
 			stmt = MainController.getDbController().getConnection().createStatement();
 			rs = stmt.executeQuery(sql);
 			
